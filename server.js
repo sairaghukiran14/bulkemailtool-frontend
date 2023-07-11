@@ -111,21 +111,17 @@ app.get("/userslist", middleware_Authenticate_Token, async (req, res) => {
 
 //Sent email Details
 app.post("/sendmail", middleware_Authenticate_Token, (req, res) => {
-  const {
-    email_title,
-    email_subject,
-    email_content,
-    created_ByUser,
-    email_list,
-  } = req.body;
+  const { email_title, email_subject, email_content, created_At, email_list } =
+    req.body;
+  const date = new Date();
   let NewSentEmail = new sent_email_schemas({
     email_title,
     email_subject,
     email_content,
-    created_ByUser,
+    created_At,
     email_list,
   });
-
+  NewSentEmail.created_At = date;
   let mailOptions = {
     from: "lovelyraghucr7@gmail.com",
     to: email_list,

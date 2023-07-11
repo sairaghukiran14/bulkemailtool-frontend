@@ -13,7 +13,7 @@ const sent_email_schema = new mongoose.Schema({
     type: "string",
     required: true,
   },
-  created_ByUser: {
+  created_At: {
     type: "string",
     required: false,
   },

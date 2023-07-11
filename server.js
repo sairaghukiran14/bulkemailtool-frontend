@@ -151,7 +151,7 @@ app.get("/myprofile", middleware_Authenticate_Token, async (req, res) => {
   }
 });
 app.get("/displayemails", middleware_Authenticate_Token, async (req, res) => {
-  const all_emails = await sent_email_schema.find();
+  const all_emails = await sent_email_schemas.find();
   res.send(all_emails);
 });
 app.post("/schedulemail", middleware_Authenticate_Token, (req, res) => {

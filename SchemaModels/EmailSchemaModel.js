@@ -15,7 +15,7 @@ const sent_email_schema = new mongoose.Schema({
   },
   created_ByUser: {
     type: "string",
-    required: true,
+    required: false,
   },
   email_list: {
     type: "string",

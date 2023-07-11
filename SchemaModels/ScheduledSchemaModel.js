@@ -13,7 +13,7 @@ const schedule_email_details = new mongoose.Schema({
     type: "string",
     required: true,
   },
-  created_ByUser: {
+  created_At: {
     type: "string",
     required: true,
   },

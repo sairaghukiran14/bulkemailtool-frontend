@@ -157,20 +157,23 @@ app.post("/schedulemail", middleware_Authenticate_Token, (req, res) => {
     email_title,
     email_subject,
     email_content,
-    created_ByUser,
+    created_At,
     Send_timestamp,
   } = req.body;
-  let NewSentEmail = new schedule_email_schema({
+  let date = new Date();
+
+  let NewScheduleEmail = new schedule_email_schema({
     email_title,
     email_subject,
     email_content,
-    created_ByUser,
+    created_At,
     Send_timestamp,
   });
-  NewSentEmail.save();
+  NewScheduleEmail.created_At = date;
+  NewScheduleEmail.save();
 
   const cronSchedule = convertToCron(Send_timestamp);
-  console.log(cronSchedule);
+  console.log("Email Scheduled Successfully");
   cron.schedule(cronSchedule, () => {
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
@@ -178,7 +181,7 @@ app.post("/schedulemail", middleware_Authenticate_Token, (req, res) => {
       } else {
         console.log("Email sent: " + info.response);
         const inserting_email_details =
-          sent_email_schema.insertOne(NewSentEmail);
+          sent_email_schemas.insertOne(NewScheduleEmail);
 
         const deleting_email_details = schedule_email_schema.deleteOne({
           email_title: NewSentEmail.email_title,

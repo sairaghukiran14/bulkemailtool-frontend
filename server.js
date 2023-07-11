@@ -91,7 +91,7 @@ app.post("/login", async (req, res) => {
     { expiresIn: 36000000 },
     (err, token) => {
       if (err) throw err;
-      return res.json({ token });
+      return res.json({ accessToken });
     }
   );
 });

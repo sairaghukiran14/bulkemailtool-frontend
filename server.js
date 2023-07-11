@@ -1,4 +1,12 @@
 require("dotenv").config();
+const app = express();
+const cors = require("cors");
+
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 const nodemailer = require("nodemailer");
 const cron = require("node-cron");
 const express = require("express");
@@ -8,14 +16,7 @@ const email_user = require("./SchemaModels/UserSchemaModel");
 const sent_email_schemas = require("./SchemaModels/EmailSchemaModel");
 const schedule_email_schema = require("./SchemaModels/ScheduledSchemaModel");
 const jwt = require("jsonwebtoken");
-const app = express();
-const cors = require("cors");
 
-app.use(
-  cors({
-    origin: "*",
-  })
-);
 app.use(express.json());
 mongoose
   .connect(

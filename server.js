@@ -103,7 +103,7 @@ app.get("/userslist", middleware_Authenticate_Token, async (req, res) => {
 
 function middleware_Authenticate_Token(req, res, next) {
   try {
-    let checktoken = req.header(`token`);
+    let checktoken = req.headers(`token`);
     if (!checktoken) {
       return res.status(400).send("Token not found");
     }

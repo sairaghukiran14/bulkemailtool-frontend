@@ -1,4 +1,5 @@
 require("dotenv").config();
+const express = require("express");
 const app = express();
 const cors = require("cors");
 
@@ -9,7 +10,7 @@ app.use(
 );
 const nodemailer = require("nodemailer");
 const cron = require("node-cron");
-const express = require("express");
+
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const email_user = require("./SchemaModels/UserSchemaModel");

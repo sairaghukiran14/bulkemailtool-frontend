@@ -1,8 +1,16 @@
 require("dotenv").config();
 const express = require("express");
+const bodyparser = require("body-parser");
 const app = express();
 const cors = require("cors");
-app.use(cors());
+app.use(express.json());
+const cors = require("cors");
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
 const nodemailer = require("nodemailer");
 const cron = require("node-cron");
 
@@ -13,7 +21,6 @@ const sent_email_schemas = require("./SchemaModels/EmailSchemaModel");
 const schedule_email_schema = require("./SchemaModels/ScheduledSchemaModel");
 const jwt = require("jsonwebtoken");
 
-app.use(express.json());
 mongoose
   .connect(
     `mongodb+srv://raghukiran1414:${process.env.MONGODB_PASSWORD_SECRET}@cluster0.m82pxwz.mongodb.net/${process.env.MONGODB_DATABASE_NAME}?retryWrites=true&w=majority`

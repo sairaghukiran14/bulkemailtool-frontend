@@ -11,7 +11,11 @@ const jwt = require("jsonwebtoken");
 const app = express();
 const cors = require("cors");
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 app.use(express.json());
 mongoose
   .connect(
@@ -101,20 +105,6 @@ app.get("/userslist", middleware_Authenticate_Token, async (req, res) => {
   return res.send(users_list);
 });
 
-function middleware_Authenticate_Token(req, res, next) {
-  try {
-    let checktoken = req.header(`token`);
-    if (!checktoken) {
-      return res.status(400).send("Token not found");
-    }
-    let decoded_token = jwt.verify(checktoken, process.env.ACCESS_TOKEN_SECRET);
-    req.user = decoded_token.user;
-    next();
-  } catch (error) {
-    if (error) throw error;
-  }
-}
-
 //Sent email Details
 app.post("/sendmail", middleware_Authenticate_Token, (req, res) => {
   const {
@@ -136,7 +126,6 @@ app.post("/sendmail", middleware_Authenticate_Token, (req, res) => {
     from: "lovelyraghucr7@gmail.com",
     to: email_list,
     subject: email_subject,
-    text: " This is test email",
     html: email_content,
   };
 
@@ -208,7 +197,19 @@ const convertToCron = (dateTime) => {
 
   return cronSchedule;
 };
-
+function middleware_Authenticate_Token(req, res, next) {
+  try {
+    let checktoken = req.header(`token`);
+    if (!checktoken) {
+      return res.status(400).send("Token not found");
+    }
+    let decoded_token = jwt.verify(checktoken, process.env.ACCESS_TOKEN_SECRET);
+    req.user = decoded_token.user;
+    next();
+  } catch (error) {
+    if (error) throw error;
+  }
+}
 app.listen(process.env.PORT, () => {
   console.log(`listening on ${process.env.PORT}`);
 });

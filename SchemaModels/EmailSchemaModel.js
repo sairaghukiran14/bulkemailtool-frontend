@@ -17,5 +17,9 @@ const sent_email_schema = new mongoose.Schema({
     type: "string",
     required: true,
   },
+  email_list: {
+    type: "string",
+    required: true,
+  },
 });
 module.exports = mongoose.model("sent_email_schema", sent_email_schema);

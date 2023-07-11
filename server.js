@@ -128,13 +128,13 @@ app.post("/sendmail", middleware_Authenticate_Token, (req, res) => {
     subject: email_subject,
     html: email_content,
   };
-
+  NewSentEmail.save();
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
       console.log(error);
     } else {
       console.log("Email sent: " + info.response);
-      NewSentEmail.save();
+
       res.send("Email has been sent successfully");
     }
   });

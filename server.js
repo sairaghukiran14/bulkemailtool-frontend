@@ -5,13 +5,17 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const email_user = require("./SchemaModels/UserSchemaModel");
-const sent_email_schema = require("./SchemaModels/EmailSchemaModel");
+const sent_email_schemas = require("./SchemaModels/EmailSchemaModel");
 const schedule_email_schema = require("./SchemaModels/ScheduledSchemaModel");
 const jwt = require("jsonwebtoken");
 const app = express();
 const cors = require("cors");
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 app.use(express.json());
 mongoose
   .connect(
@@ -110,7 +114,7 @@ app.post("/sendmail", middleware_Authenticate_Token, (req, res) => {
     created_ByUser,
     email_list,
   } = req.body;
-  let NewSentEmail = new sent_email_schema({
+  let NewSentEmail = new sent_email_schemas({
     email_title,
     email_subject,
     email_content,
